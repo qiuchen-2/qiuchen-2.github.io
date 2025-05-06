@@ -130,14 +130,25 @@
 								<li><a href="https://saadsohail5104.medium.com/understanding-padding-in-nlp-types-and-when-to-use-them-bacae6cae401#:~:text=Types%20of%20Padding%20in%20NLP&text=Pre%2DPadding%20(Default)%3A,the%20end%20of%20a%20sequence." class="button"> Medium.com Understanding padding in NLP </a></li>
 							</ul>
 
-							<p>In the RNN Model, I referenced the PyTorch article "NLP From Scratch: Classifying Names with a Character-Level RNN" by Sean Robertson and modified his model with embedded dimensions and batching. Sigmoid activation functions were included in the class for non-linearity and is useful in this case as the genre labels were binarized using Multilabel Binarizer. The outputs of this sigmoid activation function would fall between 0 and 1. If I had not done so, a softmax activation function would be more appropriate as it would be a multi-class classification problem. For the embedding dimension, torch.nn.Embedding was utilized to store the word embeddings and indices. A linear activation function was applied to the hidden and output sizes (self.h2o) in combination with the non-linear activation function in order to enhance the model's learning and prediction. This is the hidden layer activation.</p>
+							<p>In the RNN Model, I referenced the PyTorch article "NLP From Scratch: Classifying Names with a Character-Level RNN" by Sean Robertson and modified his model with embedded dimensions and batching. Sigmoid activation functions were included in the class for non-linearity and is useful in this case as the genre labels were binarized using Multilabel Binarizer. The outputs of this sigmoid activation function would fall between 0 and 1. If I had not done so, a softmax activation function would be more appropriate as it would be a multi-class classification problem. For the embedding dimension, torch.nn.Embedding was utilized to store the word embeddings and indices. A linear activation function was applied to the hidden and output sizes (self.h2o) in combination with the non-linear activation function in order to enhance the model's learning and prediction. This is the hidden layer activation. Finally, the processed data is split into batches and split using PyTorch's Dataloader and Scikit's train_test_split functions. I set a small batch size of 5 and performed an 80/20 train/test split. I originally set the batch to 16, but it was too big and giving me errors when I ran it.</p>
 
 							<p>For BERT, I utilized the BERT Tokenizer that came with the HuggingFace BERT uncased transformer package. I used truncation to remove elements that exceed the length of the specified maximum length (which was based on the description length). Attention masks were employed using BERT's encoder plus function. The IDs, attention masks, and labels were then batched for training and testing.</p>
 							<ul>
 								<li><a href="https://medium.com/@piyushkashyap045/guide-to-tokenization-and-padding-with-bert-transforming-text-into-machine-readable-data-5a24bf59d36b" class="button"> Medium.com Guide to Tokenization and Padding with BERT: Transforming Text into Machine-Readable Data </a></li>
 							</ul>
 							<ul>
-								<li><a href="generic.html" class="button">Learn more</a></li>
+								<li><a href="https://pytorch.org/docs/stable/data.html" class="button">PyTorch DataLoader</a></li>
+								<li>Class notes on batching and splitting data in "PyTorch Computer Vision" were also used</li>
+							</ul>
+							<h3>Hyperparameters</h3>
+							<h4>RNN Model</h4>
+							<p>The following hyperparameters were used for the RNN model: </p>
+							<ul>
+								<li>Optimizer: AdamW</li>
+								<li>Loss Function: BCEWithLogitsLoss</li>
+								<li>Learning Rate: 1e-10</li>
+								<li>Input Size: 39,564</li>
+								<li>Output Size: 19 (# of Genre Types)</li>
 							</ul>
 						</div>
 					</section>
