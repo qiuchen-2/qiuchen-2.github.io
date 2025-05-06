@@ -175,7 +175,7 @@
 									<span class="icon solid major fa-code"></span>
 									<h3>Training & Testing Loss vs Epoch (RNN)</h3>
 									<img src="images/Baseline-Training-Testing-Loss-vs-Epoch.png" alt="RNN test train loss", width= 500, height = 500>
-									<p>The RNN model ran for 50 epochs and I recorded the average loss (with batches) for each batch to plot and output. This model took minutes to train and test.</p>
+									<p>The RNN model ran for 50 epochs and I recorded the average loss (with batches) for each batch to plot and output. This model took approximately 15 minutes to run the train and test loops.</p>
 									<img src="images/train-test-rnn.png" alt="Train-test results RNN", width= 500, height = 500>
 								</section>
 								<section>
@@ -194,21 +194,18 @@
 								<section>
 									<span class="icon solid major fa-desktop"></span>
 									<h3>F1 Score vs Epoch (BERT)</h3>
-									<p>The F1 score for the BERT model was poor and reported .</p>
+									<p>The F1 score for the BERT model was poor (though it was better than the 45.7% for RNN) and reported 51.8%.</p>
 									<img src="images/BERT-F1-Score-vs-Epoch.png" alt="BERT F1 score", width= 500, height = 500>
 								</section>
 								
 							</div>
-							<ul class="actions">
-								<li><a href="generic.html" class="button">Learn more</a></li>
-							</ul>
 						</div>
 					</section>
 				<!-- Five -->
 					<section id="five" class="wrapper style3 fade-up">
 						<div class="inner">
 							<h2>Reproducibility & Instructions</h2>
-							<p>To reproduce the model, please utilize Google Colab and a GPU for a smoother and faster experience. I started this project on Jupyter Notebooks and it gets slow and laggy given the dataset is so large and the models are computationally intensive.</p>
+							<p>To reproduce the model, please utilize Google Colab and a GPU for a smoother and faster experience. I started this project on Jupyter Notebooks and it gets slow and laggy given the dataset is so large and the models are computationally intensive. Utilize the code that is provided labeled "Final EAS 510 Project.ipynb" (a notebook file) and it should run automatically with the outlined steps (with the exception of adding a kaggle.json file for the API).</p>
 							<div class="features">
 								<section>
 									<span class="icon solid major fa-code"></span>
@@ -226,18 +223,20 @@
 								</section>
 								<section>
 									<span class="icon solid major fa-lock"></span>
-									<h3>Aliquam sed nullam</h3>
-									<p>Phasellus convallis elit id ullam corper amet et pulvinar. Duis aliquam turpis mauris, sed ultricies erat dapibus.</p>
+									<h3>Upload kaggle.json & Importing the dataset</h3>
+									<p>Upload the kaggle.json that you can get from your Kaggle API in your account. This will allow you to access the dataset using kaggle hub. For the dataset that I modified, I uploaded the file onto kaggle, and it can be obtained with "!kaggle datasets download -d 510-project-letterboxd-cleaned"</p>
 								</section>
 								<section>
 									<span class="icon solid major fa-cog"></span>
-									<h3>Sed erat ullam corper</h3>
-									<p>Phasellus convallis elit id ullam corper amet et pulvinar. Duis aliquam turpis mauris, sed ultricies erat dapibus.</p>
+									<h3>Creating the File Paths</h3>
+									<p>It is necessary to unzip the zipfile and store the files in a local folder. In this case, the folder created was named "Extracted_Files" and paths were copied from the folder to link them to variable names. These names were then passed on to pandas in order to create dataframes from the extracted csv files.</p>
 								</section>
 								<section>
 									<span class="icon solid major fa-desktop"></span>
-									<h3>Veroeros quis lorem</h3>
-									<p>Phasellus convallis elit id ullam corper amet et pulvinar. Duis aliquam turpis mauris, sed ultricies erat dapibus.</p>
+									<h3>Movie IDs, dictionary, and data processing</h3>
+									<p>The extracted files are now linked to two separate dataframes. The genres csv has significantly more entries due to the genres being spread across different rows (for example, ID 1000001 has entries in the first and second row with genres "Comedy" and "Adventure"). I combined the two dataframes together so that each row has the unique ID, movie description, name, date, tagline, minute, rating, and genres. There are more information provided than what is needed for the purpose of the project, so I retained only "description" and "genres".</p>
+									
+									<p>A movie dictionary was created through iterating each row of the genre dataframe. It returns a dictionary where the keys are the movie IDs and the values are the genres. For example: {'1000001': ['Comedy', 'Adventure'], '1000002': ['Comedy', 'Thriller', 'Drama'], '1000003': ['Science Fiction', 'Adventure', 'Comedy', 'Action'], '1000004': ['Drama'], '1000005': ['Drama', 'Comedy', 'Music', 'Romance'] ...}</p>
 								</section>
 								<section>
 									<span class="icon solid major fa-link"></span>
