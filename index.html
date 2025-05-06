@@ -213,12 +213,14 @@
 									<p>To get started, first import the relevant libraries, including PyTorch and Scikit. It will also be necessary to have a Kaggle account and kaggle hub installed.</p>
 									<ul>
 										<li>PyTorch (torch): torch.nn, torch.utils.data (Dataset, Dataloader), torch.nn.utils.rnn (pad_sequence)</li>
-										<li>Scikit (sklearn): sklearn.preprocessing (MultiLabelBinarizer), sklearn.utils (resample), sklearn.metrics (recall_score, accuracy score)</li>
+										<li>Scikit (sklearn): sklearn.preprocessing (MultiLabelBinarizer), sklearn.utils (resample), sklearn.metrics (recall_score, accuracy score, f1_score)</li>
 										<li>Pandas (pd) for dataframe work</li>
 										<li>Numpy (np) for conversion into arrays</li>
 										<li>zipfile (ZipFile) for reading zipped files (that contain the dataset CSVs for the project)</li>
 										<li>Plotting libraries such as Seaborn (sns) and matplotlib (plt)</li>
 										<li>Google.colab import files (to upload kaggle.json API key)</li>
+										<li>itertools (permutations)</li>
+										<li>tensorflow (tf): tensorflow.keras, tensorflow.keras.models (Sequential), tensorflow.keras.layers (LSTM, Dense, Embedding), tensorflow.keras.preprocessing.text (Tokenizer), tensorflow.keras.preprocessing.sequence (pad_sequences)</li>
 									</ul>
 								</section>
 								<section>
@@ -235,22 +237,71 @@
 									<span class="icon solid major fa-desktop"></span>
 									<h3>Movie IDs, dictionary, and data processing</h3>
 									<p>The extracted files are now linked to two separate dataframes. The genres csv has significantly more entries due to the genres being spread across different rows (for example, ID 1000001 has entries in the first and second row with genres "Comedy" and "Adventure"). I combined the two dataframes together so that each row has the unique ID, movie description, name, date, tagline, minute, rating, and genres. There are more information provided than what is needed for the purpose of the project, so I retained only "description" and "genres".</p>
-									
+
 									<p>A movie dictionary was created through iterating each row of the genre dataframe. It returns a dictionary where the keys are the movie IDs and the values are the genres. For example: {'1000001': ['Comedy', 'Adventure'], '1000002': ['Comedy', 'Thriller', 'Drama'], '1000003': ['Science Fiction', 'Adventure', 'Comedy', 'Action'], '1000004': ['Drama'], '1000005': ['Drama', 'Comedy', 'Music', 'Romance'] ...}</p>
+
+									<p>These key value pairs are helpful for creating a co-occurence matrix. For values that had more than a length of 2, permutations will be applied using itertools permutations. These permutations are then evaluated for duplicates and any values that fit the criteria are removed using python frozenset. For example, permutations "Action, Comedy" and "Comedy, Action" are considered duplicates. These values can be passed on to pandas dataframe to create a co-occurrence matrix. The dataframe is also used to merge with the additional data (as they have the same format and columns).</p>
 								</section>
 								<section>
 									<span class="icon solid major fa-link"></span>
-									<h3>Urna quis bibendum</h3>
-									<p>Phasellus convallis elit id ullam corper amet et pulvinar. Duis aliquam turpis mauris, sed ultricies erat dapibus.</p>
+									<h3>Tokenizer (RNN)</h3>
+									<p>For the RNN model, import TensorFlow's Keras library (as listed above). Tokenize the descriptions column and pad the sequences so they are all of the same length. This is important as different descriptions will have different lengths, which could cause potential errors. Pass the tokenized data into a with scikit train_test_split.</p>
+
+									<h3>Tokenizer (BERT)</h3>
+									<p>For BERT, utilize the pre-trained model's tokenizer by passing the descriptions column through BertTokenizer.pretrained('bert-base-uncased') through its encoder_plus function. BERT uncased is used as it is not strict on the case of the letters (capital vs lowercase), but in the preprocessing of the code, all the descriptions are converted into lowercase just in case. Pass the tokenized text, token_ids, attention_masks and labels into a train_test_split.</p>
 								</section>
 								<section>
 									<span class="icon major fa-gem"></span>
-									<h3>Aliquam urna dapibus</h3>
-									<p>Phasellus convallis elit id ullam corper amet et pulvinar. Duis aliquam turpis mauris, sed ultricies erat dapibus.</p>
+									<h3>Training Loop</h3>
+									<p>Please refer to the hyperparameters specified above for each model. Be sure to set the model to training mode using model.train() and to pass the data into the device being used (either cuda or cpu). In the training loop, the data will:</p>
+									<ul>
+										<li>Be passed onto the model for training and converted into logits</li>
+										<li>The logits are passed through a sigmoid activation function</li>
+										<li>Loss is calculated and the weights and biases are optimized through the optimizer</li>
+										<li>Backpropogation occurs and the optimizer takes a step forward</li>
+									</ul>
+
+									<h3>Testing Loop</h3>
+									<p>Set the model into evaluation mode by passing the model through model.eval() and using inference mode from PyTorch. It is similar to the training process, except now testing values are being used with the logits gained from the training loop stage. F1 scores are calulated using scikit fl_score.</p>
 								</section>
 							</div>
+
+							<section>
+								<h2>References used for this project</h2>
+								<h3>Papers</h3>
 							<ul class="actions">
-								<li><a href="generic.html" class="button">Learn more</a></li>
+								<li><a href="https://arxiv.org/pdf/1810.04805" class="button">BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding</a></li>
+								<li><a href="https://arxiv.org/pdf/1706.03762" class="button">Attention Is All You Need</a></li>
+								<li><a href="https://arxiv.org/pdf/1905.11946" class="button">EfficientNet: Rethinking Model Scaling for Convolutional Neural Networks</a></li>
+							</ul>
+								<h3>Online References (including course notes) </h3>
+								<ul class="actions">
+								<li><a href="https://csragtoriches.com/teaching/aibasic/" class="button">EAS 510 Course Notes</a></li>
+								<li><a href="https://pytorch.org/docs/stable/index.html" class="button">PyTorch Documentation Library</a></li>
+								<li><a href="https://stackoverflow.com/questions/6740918/creating-a-dictionary-from-a-csv-file" class="button">stack overflow: Creating a dictionary from a csv file</a></li>
+								<li><a href="https://docs.vultr.com/python/built-in/frozenset" class="button">Vultr - Python frozenset()</a></li>
+								<li><a href="https://docs.python.org/3/library/collections.html#collections.defaultdict" class="button">Python defaultdict()</a></li>
+								<li><a href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html" class="button">Pandas DataFrame documentation</a></li>
+								<li><a href="http://stackoverflow.com/questions/65324814/how-could-i-count-all-the-genres-in-my-dataframe" class="button">stack overflow: counting genres in dataframe</a></li>
+								<li><a href="https://stackoverflow.com/questions/29314033/drop-rows-containing-empty-cells-from-a-pandas-dataframe" class="button">stack overflow: dropping empty cells from dataframe</a></li>
+								<li><a href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.groupby.html" class="button">Pandas DataFrame groupby() documentation</a></li>
+								<li><a href="https://seaborn.pydata.org/generated/seaborn.histplot.html" class="button">Seaborn Histoplot documentation</a></li>
+								<li><a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.norm.html" class="button">scipy Gaussian Distribution documentation</a></li>
+								<li><a href="https://medium.com/@tam.tamanna18/handling-imbalanced-datasets-in-python-methods-and-procedures-7376f99794de" class="button">Medium.com Handling imbalanced datasets in Python Methods and Procedures</a></li>
+								<li><a href="https://developers.google.com/machine-learning/crash-course/overfitting/imbalanced-datasets" class="button">Google for Developers Machine Learning Datasets: Imbalanced Datasets</a></li>
+								<li><a href="https://www.nltk.org/api/nltk.tokenize.word_tokenize.html" class="button">NLTK word tokenizing documentation</a></li>
+								<li><a href="https://sharmasaravanan.medium.com/text-generation-using-lstm-a-step-by-step-guide-9b787467f9de" class="button">Medium.com Text Generation using LSTM Guide</a></li>
+								<li><a href="https://saadsohail5104.medium.com/understanding-padding-in-nlp-types-and-when-to-use-them-bacae6cae401" class="button">Medium.com Padding in NLP Types</a></li>
+								<li><a href="https://www.tensorflow.org/api_docs/python/tf/keras/datasets/imdb/get_word_index" class="button">Tensorflow keras word_index documentation</a></li>
+								<li><a href="https://www.geeksforgeeks.org/implementing-recurrent-neural-networks-in-pytorch/" class="button">GeeksforGeeks RNN in PyTorch</a></li>
+								<li><a href="https://pytorch.org/tutorials/intermediate/char_rnn_classification_tutorial" class="button">PyTorch Character Level RNN Classification Tutorial documentation</a></li>
+								<li><a href="https://pytorch.org/docs/stable/generated/torch.nn.Embedding.html" class="button">PyTorch Embedding Documentation</a></li>
+								<li><a href="https://scikit-learn.org/stable/modules/generated/sklearn.metrics.f1_score.html" class="button">Scikit F1-Score documentation</a></li>
+								<li><a href="stackoverflow.com/questions/73640393/precision-recall-f1-score-with-sklearn-on-pytorch" class="button">stack overflow: Precision recall F1 score with sklearn on PyTorch</a></li>
+								<li><a href="https://huggingface.co/google-bert/bert-base-uncased" class="button">HuggingFace BERT uncased transformer model</a></li>
+								<li><a href="https://medium.com/data-science/a-complete-guide-to-bert-with-code-9f87602e4a11" class="button">Medium.com A complete guide to BERT with code</a></li>
+								<li><a href="https://discuss.pytorch.org/t/multi-label-classification-in-pytorch/905/10" class="button">Multi-label Classification in PyTorch</a></li>
+								<li><a href="https://ublearns.buffalo.edu" class="button">UBLearns course notes and assignments</a></li>
 							</ul>
 						</div>
 					</section>
@@ -261,7 +312,7 @@
 			<footer id="footer" class="wrapper style1-alt">
 				<div class="inner">
 					<ul class="menu">
-						<li>&copy; Untitled. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+						<li>&copy; Template Copyrights. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
 					</ul>
 				</div>
 			</footer>
