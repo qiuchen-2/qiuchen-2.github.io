@@ -95,9 +95,13 @@
 								<section>
 									<span class="icon solid major fa-link"></span>
 									<h3>Dataset Balancing</h3>
-									<p>After gathering the data, I attempted to balance the data in two ways. The first was simply finding more data (done through TMDB) and appended it to the existing Pandas dataframe that I had with the data from the original dataset. This has only slightly increased the presence of the underrepresented genres, as shown in the barplot and Gaussian distribution below: </p>
+									<p>After gathering the data, I attempted to balance the data in two ways. The first was simply finding more data (done through TMDB) and appended it to the existing Pandas dataframe that I had with the data from the original dataset (data increase of 400). This has only slightly increased the presence of the underrepresented genres, as shown in the barplot and Gaussian distribution below: </p>
 									<img src="images/Distribution-of-Movie-Genres(with-more-data).png" alt="More Data Gaussian Distribution", width= 300, height = 300>
 									<img src="images/second_gauss.png" alt="Second Dataset Gaussian Distribution", width= 300, height = 300>
+									<p>This did not fully balance the data, so I applied random undersampling to the overrepresented data and upsampling to the underrepresented data as recommended by recent sources such as Medium.com and Google for Developers</p>
+									<ul class="actions">
+								<li><a href="https://developers.google.com/machine-learning/crash-course/overfitting/imbalanced-datasets" class="button">Google for Developers Machine Learning Datasets: Imbalanced Datasets</a></li>
+							</ul>
 								</section>
 								<section>
 									<span class="icon major fa-gem"></span>
@@ -138,34 +142,7 @@
 										</ul>
 									</form>
 								</section>
-								<section>
-									<ul class="contact">
-										<li>
-											<h3>Address</h3>
-											<span>12345 Somewhere Road #654<br />
-											Nashville, TN 00000-0000<br />
-											USA</span>
-										</li>
-										<li>
-											<h3>Email</h3>
-											<a href="#">user@untitled.tld</a>
-										</li>
-										<li>
-											<h3>Phone</h3>
-											<span>(000) 000-0000</span>
-										</li>
-										<li>
-											<h3>Social</h3>
-											<ul class="icons">
-												<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
-												<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
-												<li><a href="#" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
-												<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
-												<li><a href="#" class="icon brands fa-linkedin-in"><span class="label">LinkedIn</span></a></li>
-											</ul>
-										</li>
-									</ul>
-								</section>
+								
 							</div>
 						</div>
 					</section>
