@@ -149,6 +149,7 @@
 								<li>Learning Rate: 1e-10</li>
 								<li>Input Size: 39,564</li>
 								<li>Output Size: 19 (# of Genre Types)</li>
+								<li>Batch Size: 5</li>
 							</ul>
 							<h4>BERT Uncased Transformer Model</h4>
 							<p>The following hyperparameters were used for the BERT uncased model: </p>
@@ -166,38 +167,37 @@
 					<section id="four" class="wrapper style3 fade-up">
 						<div class="inner">
 							<h2>Results & Evaluation</h2>
-							<p>Phasellus convallis elit id ullamcorper pulvinar. Duis aliquam turpis mauris, eu ultricies erat malesuada quis. Aliquam dapibus, lacus eget hendrerit bibendum, urna est aliquam sem, sit amet imperdiet est velit quis lorem.</p>
+							<p>F1 scores were used in each Epoch to measure the performance of the model. It takes into consideration the precision and recall scores and returns an evaluation score. This is particularly helpful when the data is imbalanced as it takes into account a harmonic mean rather than an average. I flattened the values to remove the error that F1 score gave when running the initial testing. This was necessary since this was a multi-label classification problem and the model is trying to predict multiple labels rather than just a single value.</p>
+
+							<p>I attempted to create confusion matrices, but they returned two 2x2 matrix results rather than all the classes when using Scikit multilabel_confusion_matrix so it is omitted here (no visual representation).</p>
 							<div class="features">
 								<section>
 									<span class="icon solid major fa-code"></span>
-									<h3>Lorem ipsum amet</h3>
-									<p>Phasellus convallis elit id ullam corper amet et pulvinar. Duis aliquam turpis mauris, sed ultricies erat dapibus.</p>
+									<h3>Training & Testing Loss vs Epoch (RNN)</h3>
+									<img src="images/Baseline-Training-Testing-Loss-vs-Epoch.png" alt="RNN test train loss", width= 500, height = 500>
+									<p>The RNN model ran for 50 epochs and I recorded the average loss (with batches) for each batch to plot and output. This model took minutes to train and test.</p>
+									<img src="images/train-test-rnn.png" alt="Train-test results RNN", width= 500, height = 500>
 								</section>
 								<section>
 									<span class="icon solid major fa-lock"></span>
-									<h3>Aliquam sed nullam</h3>
-									<p>Phasellus convallis elit id ullam corper amet et pulvinar. Duis aliquam turpis mauris, sed ultricies erat dapibus.</p>
+									<h3>F1 Score vs Epoch (RNN)</h3>
+									<p>The F1 score for the RNN model stayed consistent around 50% which meant that the model wasn't doing well and was making random guesses.</p>
+									<img src="images/F1-Score-vs-Epoch.png" alt="RNN F1 score", width= 500, height = 500>
 								</section>
 								<section>
 									<span class="icon solid major fa-cog"></span>
-									<h3>Sed erat ullam corper</h3>
-									<p>Phasellus convallis elit id ullam corper amet et pulvinar. Duis aliquam turpis mauris, sed ultricies erat dapibus.</p>
+									<h3>Training & Testing Loss vs Epoch (BERT)</h3>
+									<img src="images/BERT-Training-Testing-Loss-vs-Epoch.png" alt="BERT test train loss", width= 500, height = 500>
+									<p>BERT trained for 4 epochs (the BERT article recommended 2-4 epochs for fine-tuning since it is already a pre-trained model). As with the RNN Model, an average training and testing loss were applied to the loop to record loss at each batch. </p>
+									<img src="images/BERT-train-test-rnn.png" alt="Train-test results BERT", width= 500, height = 500>
 								</section>
 								<section>
 									<span class="icon solid major fa-desktop"></span>
-									<h3>Veroeros quis lorem</h3>
-									<p>Phasellus convallis elit id ullam corper amet et pulvinar. Duis aliquam turpis mauris, sed ultricies erat dapibus.</p>
+									<h3>F1 Score vs Epoch (BERT)</h3>
+									<p>The F1 score for the BERT model was poor and reported .</p>
+									<img src="images/BERT-F1-Score-vs-Epoch.png" alt="BERT F1 score", width= 500, height = 500>
 								</section>
-								<section>
-									<span class="icon solid major fa-link"></span>
-									<h3>Urna quis bibendum</h3>
-									<p>Phasellus convallis elit id ullam corper amet et pulvinar. Duis aliquam turpis mauris, sed ultricies erat dapibus.</p>
-								</section>
-								<section>
-									<span class="icon major fa-gem"></span>
-									<h3>Aliquam urna dapibus</h3>
-									<p>Phasellus convallis elit id ullam corper amet et pulvinar. Duis aliquam turpis mauris, sed ultricies erat dapibus.</p>
-								</section>
+								
 							</div>
 							<ul class="actions">
 								<li><a href="generic.html" class="button">Learn more</a></li>
@@ -208,12 +208,21 @@
 					<section id="five" class="wrapper style3 fade-up">
 						<div class="inner">
 							<h2>Reproducibility & Instructions</h2>
-							<p>Phasellus convallis elit id ullamcorper pulvinar. Duis aliquam turpis mauris, eu ultricies erat malesuada quis. Aliquam dapibus, lacus eget hendrerit bibendum, urna est aliquam sem, sit amet imperdiet est velit quis lorem.</p>
+							<p>To reproduce the model, please utilize Google Colab and a GPU for a smoother and faster experience. I started this project on Jupyter Notebooks and it gets slow and laggy given the dataset is so large and the models are computationally intensive.</p>
 							<div class="features">
 								<section>
 									<span class="icon solid major fa-code"></span>
-									<h3>Lorem ipsum amet</h3>
-									<p>Phasellus convallis elit id ullam corper amet et pulvinar. Duis aliquam turpis mauris, sed ultricies erat dapibus.</p>
+									<h3>Importing Relevant Libraries</h3>
+									<p>To get started, first import the relevant libraries, including PyTorch and Scikit. It will also be necessary to have a Kaggle account and kaggle hub installed.</p>
+									<ul>
+										<li>PyTorch (torch): torch.nn, torch.utils.data (Dataset, Dataloader), torch.nn.utils.rnn (pad_sequence)</li>
+										<li>Scikit (sklearn): sklearn.preprocessing (MultiLabelBinarizer), sklearn.utils (resample), sklearn.metrics (recall_score, accuracy score)</li>
+										<li>Pandas (pd) for dataframe work</li>
+										<li>Numpy (np) for conversion into arrays</li>
+										<li>zipfile (ZipFile) for reading zipped files (that contain the dataset CSVs for the project)</li>
+										<li>Plotting libraries such as Seaborn (sns) and matplotlib (plt)</li>
+										<li>Google.colab import files (to upload kaggle.json API key)</li>
+									</ul>
 								</section>
 								<section>
 									<span class="icon solid major fa-lock"></span>
