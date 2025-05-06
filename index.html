@@ -41,7 +41,7 @@
 							<p>This is a fine responsive site template that I will use for my project, designed by <a href="http://html5up.net">HTML5 UP</a><br />
 							and released for free under the <a href="http://html5up.net/license">Creative Commons</a>.</p>
 
-							<p>I am an Engineering Education PhD student, and do not have any Data Science and Computer Science background so a lot of this was very new to me (and I gave my best attempt at this with the time and knowledge I had). My group project partner also dropped out of the class, so there is no vision aspect of this project. I tried my best with the Data gathering & exploration, though it is still unbalanced. The NLP text models I implemented are RNN and BERT (uncased). I referenced many Medium.com articles and other documentation for this (including PyTorch and Pandas).
+							<p>I am an Engineering Education PhD student, and do not have any Data Science and Computer Science background so a lot of this was very new to me (and I gave my best attempt at this with the time and knowledge I had). My group project partner also dropped out of the class, so there is no vision aspect of this project. I tried my best with the Data gathering & exploration, though it is still unbalanced. The NLP text models I implemented are RNN and BERT (uncased). I referenced many Medium.com articles and other documentation for this (including PyTorch and Pandas). I also referenced the class notes that are posted on the course website for batching and training loops.
 							</p>
 							
 						</div>
@@ -69,7 +69,7 @@
 						<div class="inner">
 							<h2>Dataset Description</h2>
 							<p>The original dataset is from "Letterboxd (Movies Dataset)" by Simon Garanin from Kaggle.com and is sourced from GPL3 (https://www.gnu.org/licenses/gpl-3.0.en.html). As I am deploying this via GitHub Pages, it counts as distribution. The amount of data cleaned up (removing N/A, fill out genres, etc.) amounts to 27068 movies. The distribution of the original dataset is seen below: </p>
-							<img src="images/Distribution-of-Movie-Genres.png" alt="Movie Genres", width= 300, height = 300>
+							<img src="images/Distribution-of-Movie-Genres.png" alt="Movie Genres", width= 500, height = 500>
 
 							<p>Supplemental data is from TMDB (as specified by TMDB API Attribution page, the logo is included below for the use of their data). </p>
 							<img src="images/TMDB-Credit-Logo.png" alt="TMDB Credit", width= 300, height = 300>
@@ -84,7 +84,9 @@
 									<span class="icon solid major fa-lock"></span>
 									<h3>Unbalanced Data</h3>
 									<p>Observation of the distribution of datasets show that the data is highly unbalanced, with the most prevalent genres being Drama & Comedy. The least represented genres are Western, TV Movie, War, History, Music, and Family. I attempted to correct this by using supplemental data from TMDB on the specified underrepresented genres. The Gaussian distribution of the original dataset is shown below: </p>
-									<img src="images/original_gauss.png" alt="Original Dataset Gaussian Distribution", width= 300, height = 300>
+									<img src="images/original_gauss.png" alt="Original Dataset Gaussian Distribution", width= 500, height = 500>
+
+									<p>The cleaned csv's (genre and movies) are then uploaded to a Kaggle account for me to pull the data using Kaggle's API. The id's in both csv's are utilized to create a movie dictionary where the ID is matched to the genres. The values in the dictionary were used to create a co-occurence matrix. For movies that had more than two genres, I used itertool's permutations and python frozenset and looped the dictionary to remove any duplicates (for example, "Action, Comedy" and "Comedy, Action" are duplicates). The values are converted into a pandas dataframe and plotted with Seaborn Heatmap. </p>
 								</section>
 								<section>
 									<span class="icon solid major fa-cog"></span>
@@ -96,17 +98,19 @@
 									<span class="icon solid major fa-link"></span>
 									<h3>Dataset Balancing</h3>
 									<p>After gathering the data, I attempted to balance the data in two ways. The first was simply finding more data (done through TMDB) and appended it to the existing Pandas dataframe that I had with the data from the original dataset (data increase of 400). This has only slightly increased the presence of the underrepresented genres, as shown in the barplot and Gaussian distribution below: </p>
-									<img src="images/Distribution-of-Movie-Genres(with-more-data).png" alt="More Data Gaussian Distribution", width= 300, height = 300>
-									<img src="images/second_gauss.png" alt="Second Dataset Gaussian Distribution", width= 300, height = 300>
+									<img src="images/Distribution-of-Movie-Genres-(with-more-data).png" alt="More Data Gaussian Distribution", width= 500, height = 500>
+									<img src="images/second_gauss.png" alt="Second Dataset Gaussian Distribution", width= 500, height = 500>
 									<p>This did not fully balance the data, so I applied random undersampling to the overrepresented data and upsampling to the underrepresented data as recommended by recent sources such as Medium.com and Google for Developers</p>
 									<ul class="actions">
 								<li><a href="https://developers.google.com/machine-learning/crash-course/overfitting/imbalanced-datasets" class="button">Google for Developers Machine Learning Datasets: Imbalanced Datasets</a></li>
+								<li><a href="https://medium.com/@tam.tamanna18/handling-imbalanced-datasets-in-python-methods-and-procedures-7376f99794de" class="button">Medium.com Handling Imbalanced Datasets in Python: Methods and Procedures</a></li>
 							</ul>
 								</section>
 								<section>
 									<span class="icon major fa-gem"></span>
-									<h3>Aliquam urna dapibus</h3>
-									<p>Phasellus convallis elit id ullam corper amet et pulvinar. Duis aliquam turpis mauris, sed ultricies erat dapibus.</p>
+									<h3>Text Preprocessing</h3>
+									<p>The data is in the form of a pandas dataframe and has columns "description" and "genres". These genre labels are passed through Scikit's MultiLabel Binarizer and trainsformed, which converted them into a Numpy array of 1's and 0's. Some minor dataframe editing was done in order to ensure that the columns were "descriptions" and "genres" (or the category of genres) and not the index.</p>
+									<p>NLTK packages "punkt", "stopwords", and "punkt_tab" were called to remove stopwords such as "the", "a", etc. that did not contribute much to understanding the text (compared to keywords).</p>
 								</section>
 							</div>
 							<ul class="actions">
@@ -120,30 +124,10 @@
 						<div class="inner">
 							<h2>Methodology (Text)</h2>
 							<p>Phasellus convallis elit id ullamcorper pulvinar. Duis aliquam turpis mauris, eu ultricies erat malesuada quis. Aliquam dapibus, lacus eget hendrerit bibendum, urna est aliquam sem, sit amet imperdiet est velit quis lorem.</p>
-							<div class="split style1">
-								<section>
-									<form method="post" action="#">
-										<div class="fields">
-											<div class="field half">
-												<label for="name">Name</label>
-												<input type="text" name="name" id="name" />
-											</div>
-											<div class="field half">
-												<label for="email">Email</label>
-												<input type="text" name="email" id="email" />
-											</div>
-											<div class="field">
-												<label for="message">Message</label>
-												<textarea name="message" id="message" rows="5"></textarea>
-											</div>
-										</div>
 										<ul class="actions">
 											<li><a href="" class="button submit">Send Message</a></li>
 										</ul>
-									</form>
-								</section>
-								
-							</div>
+
 						</div>
 					</section>
 
