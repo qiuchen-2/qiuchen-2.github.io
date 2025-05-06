@@ -72,6 +72,7 @@
 							<img src="images/Distribution-of-Movie-Genres.png" alt="Movie Genres", width= 300, height = 300>
 
 							<p>Supplemental data is from TMDB (as specified by TMDB API Attribution page, the logo is included below for the use of their data). </p>
+							<img src="images/TMDB-Credit-Logo.png" alt="TMDB Credit", width= 300, height = 300>
 
 							<div class="features">
 								<section>
@@ -82,22 +83,21 @@
 								<section>
 									<span class="icon solid major fa-lock"></span>
 									<h3>Unbalanced Data</h3>
-									<p>Observation of the distribution of datasets show that the data is highly unbalanced, with the most prevalent genres being Drama & Comedy. The least represented genres are Western, TV Movie, War, History, Music, and Family. I attempted to correct this by using supplemental data from TMDB on the specified underrepresented genres.</p>
+									<p>Observation of the distribution of datasets show that the data is highly unbalanced, with the most prevalent genres being Drama & Comedy. The least represented genres are Western, TV Movie, War, History, Music, and Family. I attempted to correct this by using supplemental data from TMDB on the specified underrepresented genres. The Gaussian distribution of the original dataset is shown below: </p>
+									<img src="images/original_gauss.png" alt="Original Dataset Gaussian Distribution", width= 300, height = 300>
 								</section>
 								<section>
 									<span class="icon solid major fa-cog"></span>
-									<h3>Sed erat ullam corper</h3>
-									<p>Phasellus convallis elit id ullam corper amet et pulvinar. Duis aliquam turpis mauris, sed ultricies erat dapibus.</p>
-								</section>
-								<section>
-									<span class="icon solid major fa-desktop"></span>
-									<h3>Veroeros quis lorem</h3>
-									<p>Phasellus convallis elit id ullam corper amet et pulvinar. Duis aliquam turpis mauris, sed ultricies erat dapibus.</p>
+									<h3>Co-Occurrence Matrix</h3>
+									<p>Pictured below is the co-occurrence matrix for the movie genres. By inspection, the highest combinations are with (Comedy, Drama), (Drama, Romance), and (Drama, Thriller). The lowest combinations are (Documentary, Western), (Documentary, Thriller), and (History, Science Fiction).</p>
+									<img src="images/Co-Occurrence-Matrix-of-Movie-Genres.png" alt="Co-Occurrence Matrix", width= 300, height = 300>
 								</section>
 								<section>
 									<span class="icon solid major fa-link"></span>
-									<h3>Urna quis bibendum</h3>
-									<p>Phasellus convallis elit id ullam corper amet et pulvinar. Duis aliquam turpis mauris, sed ultricies erat dapibus.</p>
+									<h3>Dataset Balancing</h3>
+									<p>After gathering the data, I attempted to balance the data in two ways. The first was simply finding more data (done through TMDB) and appended it to the existing Pandas dataframe that I had with the data from the original dataset. This has only slightly increased the presence of the underrepresented genres, as shown in the barplot and Gaussian distribution below: </p>
+									<img src="images/Distribution-of-Movie-Genres(with-more-data).png" alt="More Data Gaussian Distribution", width= 300, height = 300>
+									<img src="images/second_gauss.png" alt="Second Dataset Gaussian Distribution", width= 300, height = 300>
 								</section>
 								<section>
 									<span class="icon major fa-gem"></span>
