@@ -113,9 +113,7 @@
 									<p>NLTK packages "punkt", "stopwords", and "punkt_tab" were called to remove stopwords such as "the", "a", etc. that did not contribute much to understanding the text (compared to keywords).</p>
 								</section>
 							</div>
-							<ul class="actions">
-								<li><a href="generic.html" class="button">Learn more</a></li>
-							</ul>
+							
 						</div>
 					</section>
 
@@ -123,11 +121,22 @@
 					<section id="three" class="wrapper style1 fade-up">
 						<div class="inner">
 							<h2>Methodology (Text)</h2>
-							<p>Phasellus convallis elit id ullamcorper pulvinar. Duis aliquam turpis mauris, eu ultricies erat malesuada quis. Aliquam dapibus, lacus eget hendrerit bibendum, urna est aliquam sem, sit amet imperdiet est velit quis lorem.</p>
-										<ul class="actions">
-											<li><a href="" class="button submit">Send Message</a></li>
-										</ul>
+							<h3>Text Pre-processing</h3>
+							<p>I spent a significant amount of time on this section in the beginning of the semester and used Bag of Words and passing the data through NLTK loops to remove unnecessary details like stop words, numbers and symbols. This method turned out to be incorrect (as noted in the presentation in April) and I restarted the whole process from scratch with Tokenizer and BERT Tokenizer.</p>
+							<h4>Tokenization</h4>
+							<p>Tokenization is converting the text into smaller sequences and parts (known as tokens). For example, a text "A brown fox jumped over a bush" will be converted into ["A", "brown", "fox", "jumped", "over", "a", "bush"] and I passed my descriptions into Tensorflow keras Tokenizer for the RNN Model. I utilized post padding (adding zeros to the end of sequence) in order to make the sequences uniform in size. This is an important step as sequences of different sizes will lead to errors. Post padding is also preferred in transformer models.</p>
+							<ul>
+								<li><a href="https://www.tensorflow.org/guide/keras" class="button"> Keras Tensorflow </a></li>
+								<li><a href="https://saadsohail5104.medium.com/understanding-padding-in-nlp-types-and-when-to-use-them-bacae6cae401#:~:text=Types%20of%20Padding%20in%20NLP&text=Pre%2DPadding%20(Default)%3A,the%20end%20of%20a%20sequence." class="button"> Medium.com Understanding padding in NLP </a></li>
+							</ul>
 
+							<p>For BERT, I utilized the BERT Tokenizer that came with the HuggingFace BERT uncased transformer package. I used </p>
+							<ul>
+								<li><a href="https://medium.com/@piyushkashyap045/guide-to-tokenization-and-padding-with-bert-transforming-text-into-machine-readable-data-5a24bf59d36b" class="button"> Medium.com Guide to Tokenization and Padding with BERT: Transforming Text into Machine-Readable Data </a></li>
+							</ul>
+							<ul>
+								<li><a href="generic.html" class="button">Learn more</a></li>
+							</ul>
 						</div>
 					</section>
 
