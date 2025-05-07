@@ -264,6 +264,14 @@
 									<h3>Testing Loop</h3>
 									<p>Set the model into evaluation mode by passing the model through model.eval() and using inference mode from PyTorch. It is similar to the training process, except now testing values are being used with the logits gained from the training loop stage. F1 scores are calulated using scikit fl_score.</p>
 								</section>
+								<section>
+									<p>I would attempt to combine the text model with computervision for more data. The existing text data was also poorly distributed (not a Gaussian distribution) and getting more data would fix most of the underfitting and poor prediction issues the models faced. I would also train on a third model (GPT-2).</p>
+									<ul>
+										<li>Batch size: increasing the amount of samples per batch so the model has more information to learn from in each iteration.</li>
+										<li>Hidden layers: increasing the hidden layers present would help the model learn more as the output is passed through more often.</li>
+										<li>The strange F1-score and loss outputs are most likely attributed to the poor dataset structure, and balanced datasets would solve some of the issues present.</li>
+									</ul>
+								</section>
 							</div>
 
 							<section>
